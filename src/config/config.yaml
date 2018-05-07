@@ -1,0 +1,80 @@
+Linear Solvers:
+  # Definitions
+  - &gmres
+    type: gmres
+    maxiter: 1000
+    tol: 1e-8
+    restart: 30
+    log result: true
+    log history: false
+
+  - &cg
+    type: cg
+    maxiter: 1000
+    tol: 1e-8
+    log result: true
+    log history: false
+
+Boundary Conditions:
+  # Definitions
+  - &inflow1
+    type: inflow
+    func: zero
+
+  - &inflow2
+    type: inflow
+    # inflow function type (only Maxwellian implemented so far)
+    func: maxwellian
+    # temperature
+    T: 1.2
+    # inflow velocity
+    v: [2, 0]
+    # inflow density
+    rho: 1.0
+
+  - &diffusive_reflection1
+    type: diffusive reflection
+    # temperature
+    T: 2
+
+
+# -- Parameter definition starts here --
+
+## use extern gmsh format
+# Mesh:
+#   type: extern
+#   file: gmsh.msh
+
+# use deal.II mesh generator
+Mesh:
+  type: square
+  # mesh refinement
+  nref: 4
+
+SpectralBasis:
+  # max polynomial degree in one direction
+  deg: 20
+
+BoundaryDescriptors:
+  # map gmsh ids to boundary values
+  {0: *inflow1, 1: *inflow2, 2: *diffusive_reflection1}
+
+# comment out to disable scattering
+Scattering:
+  file: collision_tensor.h5
+  # Knudsen number
+  kn: 1.0
+
+TimeStepping:
+  # delta t
+  dt: 1e-3
+  # total number of timesteps
+  N: 1000
+  # write solution vector to disk every n-th timestep
+  dump: 10
+  # export paraview files every n-th timestep
+  export_vtk: 5
+
+
+Solver: *gmres
+Preconditioner: ilu

@@ -1,0 +1,5 @@
+include_directories(${PROJECT_SOURCE_DIR}/src)
+FILE(GLOB_RECURSE sources  "*.cpp")
+add_library(grid ${sources})
+INSTALL(TARGETS grid ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/lib")
+#DEAL_II_SETUP_TARGET(grid)

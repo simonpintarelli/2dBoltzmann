@@ -1,0 +1,23 @@
+#!/usr/bin/zsh -f
+
+# used for paraview output
+
+echo "<?xml version=\"1.0\" ?>\n" \
+     "<!DOCTYPE Xdmf SYSTEM \"Xdmf.dtd\" []>\n" \
+     "<Xdmf Version=\"2.0\">\n" \
+     "<Domain>\n" \
+     "<Grid Name=\"CellTime\" GridType=\"Collection\" CollectionType=\"Temporal\">\n" > solution_.xdmf
+
+
+if [[ -f solution.xdmf ]]
+then
+       cat solution.xdmf >> solution_.xdmf
+else
+       echo "Error. File solution.xdmf not found. Abort!"
+       rm solution_.xdmf
+       exit -1
+fi
+
+echo "</Grid>\n"\
+     "</Domain>\n"\
+     "</Xdmf>\n" >> solution_.xdmf

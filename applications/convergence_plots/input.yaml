@@ -1,0 +1,14 @@
+reference:
+  path: /mnt/disk-drive/scratch/CFD/pipe-obstacle2/K26/
+  #grid:
+
+input:
+  path: /mnt/disk-drive/scratch/CFD/pipe-obstacle2/K20/
+  #grid:
+
+
+timesteps:
+  - reference:
+      {"data" : "solution_vector10.h5"}
+    solution:
+      {"input" : "solution_vector10.h5"}

@@ -1,0 +1,54 @@
+Linear Solvers:
+  # Definitions
+  - &gmres
+    type: gmres
+    maxiter: 1000
+    tol: 1e-11
+    restart: 25
+    log result: true
+    log history: false
+
+
+Boundary Conditions:
+  # Definitions
+  - &outflow
+    type: inflow
+    func: zero
+
+  - &inflow
+    type: inflow
+    func: maxwellian
+    # temperature
+    T: 1
+    v: [3,0]
+    rho: 1.4
+
+  - &spec_ref
+    type: specular reflection
+
+
+# Parameter definition starts here
+
+Mesh:
+  file: bf-step004.msh
+
+SpectralBasis:
+  deg: 10
+
+BoundaryDescriptors:
+  # map gmsh physical ids to boundary values
+  {11: *inflow, 66: *spec_ref, 22: *spec_ref, 55: *spec_ref, 44: *spec_ref, 33: *outflow}
+
+Scattering:
+  file: collision_tensor.h5
+  kn: 0.025
+
+TimeStepping:
+  dt: 0.0025
+  N: 1000          # number of timesteps
+  dump: 40         # dump solution vector to hdf5 every 40 timesteps
+  export_vtk: 10   # export macroscopic quantities every 10 timesteps
+
+
+Solver: *gmres
+Preconditioner: ilu

@@ -1,0 +1,5 @@
+include_directories(${PROJECT_SOURCE_DIR}/src)
+FILE(GLOB_RECURSE sources "*.cpp")
+add_library(export ${sources})
+INSTALL(TARGETS export ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/lib")
+#DEAL_II_SETUP_TARGET(export)
