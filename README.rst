@@ -1,3 +1,6 @@
+.. image:: https://zenodo.org/badge/126182914.svg
+   :target: https://zenodo.org/badge/latestdoi/126182914
+
 .. contents:: Table of contents
     :depth: 2
 
